@@ -1,0 +1,36 @@
+﻿<Window x:Class="KinectV01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:KinectV01"
+        xmlns:f="clr-namespace:KinectV01.UserInfoControls"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1600">
+    <Window.DataContext>
+        <StaticResource ResourceKey="mainViewModel"/>
+    </Window.DataContext>
+
+    <Grid>
+        <cef:ChromiumWebBrowser Address="https://youtube.com" Margin="50,69,420,171">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="Loaded">
+                    <behaviors:InvokeCommandAction Command="{Binding CreateEnterWindowCommand}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+        </cef:ChromiumWebBrowser>
+        <Button Content="Button" Command="{Binding CreateEnterWindowCommand}" HorizontalAlignment="Center" Margin="0,754,0,0" VerticalAlignment="Top" Height="80" Width="130"/>
+        <f:RankMainWindow x:Name="rankWindow" HorizontalAlignment="Left" Margin="1240,144,0,0" VerticalAlignment="Top" Width="295"/>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="130,794,0,0" VerticalAlignment="Top" Height="40" Width="190">
+            <behaviors:Interaction.Triggers>
+                <behaviors:EventTrigger EventName="Click">
+                    <behaviors:InvokeCommandAction Command="{Binding startPointCalcCommand}" />
+                </behaviors:EventTrigger>
+            </behaviors:Interaction.Triggers>
+
+        </Button>
+    </Grid>
+</Window>

@@ -224,6 +224,9 @@
   <ItemGroup>
     <Resource Include="background_frame.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="btncolor.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

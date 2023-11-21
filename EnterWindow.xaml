@@ -19,10 +19,7 @@
         </Grid.RowDefinitions>
         <Button Content="Enter" Foreground="White" Command="{Binding EnterCompleteCommand}" HorizontalAlignment="Center" Margin="0,335,0,0" VerticalAlignment="Top" Height="44" Width="128" Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="16">
             <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF00B050"/>
-                    <GradientStop Color="#FF006D2A" Offset="1"/>
-                </LinearGradientBrush>
+                <ImageBrush ImageSource="/btncolor.png"/>
             </Button.Background>
         </Button>
         <Label x:Name="UserNameLbl" Content="User Name :" HorizontalAlignment="Center" Foreground="White" Margin="0,132,230,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="16"/>

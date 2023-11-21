@@ -33,18 +33,12 @@
                 </Style>
             </Button.Resources>
             <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF006D2A" Offset="1"/>
-                    <GradientStop Color="#FF00B050" Offset="0"/>
-                </LinearGradientBrush>
+                <ImageBrush ImageSource="/btncolor.png"/>
             </Button.Background>
         </Button>
         <Button Content="Button" Foreground="White" HorizontalAlignment="Left" Margin="1350,0,0,10" VerticalAlignment="Bottom" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13">
             <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF006D2A" Offset="1"/>
-                    <GradientStop Color="#FF00B050" Offset="0"/>
-                </LinearGradientBrush>
+                <ImageBrush ImageSource="/btncolor.png"/>
             </Button.Background>
             <behaviors:Interaction.Triggers>
                 <behaviors:EventTrigger EventName="Click">

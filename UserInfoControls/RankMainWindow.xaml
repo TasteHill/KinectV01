@@ -8,14 +8,22 @@
     <Grid>
         <Grid>
             <TabControl>
-                <TabItem Header="TabItem">
-                    <Grid Background="#FFE5E5E5">
+                <TabItem Header="아이돌 랭킹" FontFamily="NEXON Football Gothic B">
+                    <Grid>
+                        <Grid.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF282727"/>
+                                <GradientStop Color="#FF283C3D" Offset="1"/>
+                                <GradientStop Color="#FF4B6C6D" Offset="0.5"/>
+                                <GradientStop Color="#FF283C3D"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
                         <ScrollViewer>
                             <Grid x:Name="gridList"/>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <TabItem Header="TabItem">
+                <TabItem Header="유저 상세정보" FontFamily="NEXON Football Gothic B">
                     <Grid Background="#FFE5E5E5">
                         <ScrollViewer>
                             <StackPanel x:Name="stackPanel"/>

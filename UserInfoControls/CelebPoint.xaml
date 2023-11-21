@@ -9,12 +9,28 @@
         <StaticResource ResourceKey="mainViewModel"/>
     </UserControl.DataContext>
     <Grid>
-        <Grid Height="80" VerticalAlignment="Top" Background="#FFF6F6F6">
-            <Button x:Name="btnExpand" Content="Button" HorizontalAlignment="Right" Margin="0,50,10,0" Height="20" VerticalAlignment="Top" Click="Button_Click"/>
-            <Image Source="/sampleimg.jpg" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label x:Name="lblIdolName" Content="연예인 이름" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="120"/>
-            <Label x:Name="lblIdolPoint" Content="{Binding CurrentIdolScore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top" Width="120" Height="29"/>
-            <Button x:Name="btnRandomizeScore" Content="Button" VerticalAlignment="Top" Click="btnRandomizeScore_Click" HorizontalAlignment="Right" Margin="0,10,10,0"/>
+        <Grid Height="80" VerticalAlignment="Top">
+            <Grid.Background>
+                <ImageBrush ImageSource="/UserInfoControls/celeb_point_image_.png"/>
+            </Grid.Background>
+            <Button x:Name="btnExpand" Content="Expand" Foreground="White" HorizontalAlignment="Right" Margin="0,50,10,0" Height="20" Width="40" VerticalAlignment="Top" Click="Button_Click" FontSize="9" FontFamily="NEXON Football Gothic B">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF006D2A" Offset="1"/>
+                        <GradientStop Color="#FF00B050" Offset="0"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <Label x:Name="lblIdolName" FontFamily="NEXON Football Gothic B" Foreground="White" Content="연예인 이름" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="13"/>
+            <Label x:Name="lblIdolPoint" FontFamily="NEXON Football Gothic B" Foreground="White"  Content="{Binding CurrentIdolScore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top" Width="120" Height="29" FontWeight="Bold" FontSize="13"/>
+            <Button x:Name="btnRandomizeScore" Content="Sort" Foreground="White" VerticalAlignment="Top" Click="btnRandomizeScore_Click" HorizontalAlignment="Right" Margin="0,10,10,0" Height="20" Width="40" FontSize="10" FontFamily="NEXON Football Gothic B">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF00B050"/>
+                        <GradientStop Color="#FF006D2A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </Grid>
         <ScrollViewer Margin="0,80,0,0">
             <Grid x:Name="gridList"/>

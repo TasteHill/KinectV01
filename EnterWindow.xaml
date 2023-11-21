@@ -10,13 +10,25 @@
         <StaticResource ResourceKey="mainViewModel"/>
     </Window.DataContext>
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/EnterWindow_image.png"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="215*"/>
         </Grid.RowDefinitions>
-        <Button Content="Button" Command="{Binding EnterCompleteCommand}" HorizontalAlignment="Center" Margin="0,335,0,0" VerticalAlignment="Top" Height="44" Width="128" Grid.Row="1"/>
-        <TextBox x:Name="idolName" Text="{Binding IDolID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="336,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
-        <TextBox x:Name="userName" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="336,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1"/>
+        <Button Content="Enter" Foreground="White" Command="{Binding EnterCompleteCommand}" HorizontalAlignment="Center" Margin="0,335,0,0" VerticalAlignment="Top" Height="44" Width="128" Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="16">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF00B050"/>
+                    <GradientStop Color="#FF006D2A" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Label x:Name="UserNameLbl" Content="User Name :" HorizontalAlignment="Center" Foreground="White" Margin="0,132,230,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="16"/>
+        <Label x:Name="UserNameLbl_Copy" Content="Idol Name :" HorizontalAlignment="Center" Foreground="White" Margin="0,203,230,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="16"/>
+        <TextBox x:Name="idolName" Text="{Binding IDolID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Margin="0,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="14"/>
+        <TextBox x:Name="userName" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="25" Margin="0,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="14"/>
 
     </Grid>
 </Window>

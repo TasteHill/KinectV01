@@ -7,9 +7,9 @@
     <Grid Height="120">
         <Image HorizontalAlignment="Left" Height="100" Margin="10,10,0,10" VerticalAlignment="Top" Width="100" Source="/sampleimg.jpg"/>
         <Label x:Name="lblPlayerName" Content="플레이어 이름
-               " HorizontalAlignment="Left" Margin="121,10,0,0" VerticalAlignment="Top" Width="119"/>
-        <Label x:Name="lblTime" Content="응원한 시간" HorizontalAlignment="Left" Margin="121,42,0,0" VerticalAlignment="Top" Width="119"/>
-        <Label x:Name="lblPoint" Content="누적 점수" HorizontalAlignment="Left" Margin="121,73,0,0" VerticalAlignment="Top" Width="119"/>
+               " HorizontalAlignment="Left" Margin="121,10,0,0" VerticalAlignment="Top" Width="119" FontFamily="NEXON Football Gothic B"/>
+        <Label x:Name="lblTime" Content="응원한 시간" HorizontalAlignment="Left" Margin="121,42,0,0" VerticalAlignment="Top" Width="119" FontFamily="NEXON Football Gothic B"/>
+        <Label x:Name="lblPoint" Content="누적 점수" HorizontalAlignment="Left" Margin="121,73,0,0" VerticalAlignment="Top" Width="119" FontFamily="NEXON Football Gothic B"/>
         <Border BorderBrush="Black" BorderThickness="1"/>
 
     </Grid>

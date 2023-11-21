@@ -56,7 +56,14 @@ namespace KinectV01.UserInfoControls
             }
 
             this.BeginAnimation(FrameworkElement.HeightProperty, heightAnimation);
-
+            if(!IsExpanded)
+            {
+                btnExpand.Content = "Minimize";
+            }
+            else
+            {
+                btnExpand.Content = "Expand";
+            }
             IsExpanded = !IsExpanded;
         }
 

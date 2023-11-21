@@ -8,11 +8,11 @@
     <Grid>
         <Image HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100"/>
         <Label Content="플레이어가 응원한 연예인 이름
-               " HorizontalAlignment="Left" Margin="112,7,0,0" VerticalAlignment="Top" />
+               " HorizontalAlignment="Left" Margin="112,7,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" />
         <Label Content="플레이어의 공헌 점수
-               " HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Center"/>
+               " HorizontalAlignment="Left" Margin="112,0,0,0" VerticalAlignment="Center" FontFamily="NEXON Football Gothic B"/>
         <Label Content="플레이어의 누적 시간
-               " HorizontalAlignment="Left" Margin="112,67,0,0" VerticalAlignment="Top"/>
+               " HorizontalAlignment="Left" Margin="112,67,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B"/>
         <Border BorderBrush="Black" BorderThickness="1"/>
 
     </Grid>

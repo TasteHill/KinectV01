@@ -222,10 +222,10 @@
     <Resource Include="EnterWindow_image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="background_frame.png" />
+    <Resource Include="btncolor.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="btncolor.png" />
+    <Resource Include="background_frame.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

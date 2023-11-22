@@ -7,14 +7,33 @@
         mc:Ignorable="d"
         Title="UserInfoDetail" Height="500" Width="800">
     <Grid>
-        <Label x:Name="UserNamelbl" Content="User Name :" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" FontWeight="Bold"/>
-        <Label x:Name="UserNolbl" Content="User Number  :" HorizontalAlignment="Left" Margin="300,40,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" FontWeight="Bold"/>
-        <Label x:Name="UserLevellbl" Content="User Level :" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22"/>
-        <Label x:Name="CheeredbyUserlbl" Content="Information about&#10; the user's idol :" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" Width="193" FontWeight="Bold" Height="67"/>
-        <Label x:Name="TotalScorelbl" Content="Total Score :" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" FontWeight="Bold"/>
-        <ListBox x:Name="InfoList" HorizontalAlignment="Left" Height="203" Margin="230,200,0,0" VerticalAlignment="Top" Width="540" d:ItemsSource="{d:SampleData ItemCount=0}"/>
-        <ProgressBar x:Name="ExpProgressBar" HorizontalAlignment="Left" Height="30" Margin="230,120,0,0" VerticalAlignment="Top" Width="540" ValueChanged="ExpProgressBar_ValueChanged"/>
-        <Label x:Name="Explbl" Content="EXP" HorizontalAlignment="Left" Margin="485,125,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/UserInfoControls/PlayerInfoImage_Background.jpg"/>
+        </Grid.Background>
+        <Label x:Name="UserNamelbl" Content="User Name :" HorizontalAlignment="Left" Margin="10,40,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" FontWeight="Bold" Foreground="White"/>
+        <Label x:Name="UserNolbl" Content="User Number  :" HorizontalAlignment="Left" Margin="300,40,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" FontWeight="Bold" Foreground="White"/>
+        <Label x:Name="UserLevellbl" Content="User Level :" HorizontalAlignment="Left" Margin="10,120,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" Foreground="White"/>
+        <Label x:Name="CheeredbyUserlbl" Content="Information about&#10; the user's idol :" HorizontalAlignment="Left" Margin="10,200,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" Width="193" FontWeight="Bold" Height="67" Foreground="White"/>
+        <Label x:Name="TotalScorelbl" Content="Total Score :" HorizontalAlignment="Left" Margin="10,420,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="22" FontWeight="Bold" Foreground="White"/>
+        <ListBox x:Name="InfoList" HorizontalAlignment="Left" Height="203" Margin="230,202,0,0" VerticalAlignment="Top" Width="540" d:ItemsSource="{d:SampleData ItemCount=0}">
+            <ListBox.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF9C9999"/>
+                    <GradientStop Color="#FF9C9999" Offset="1"/>
+                    <GradientStop Color="White" Offset="0.5"/>
+                </LinearGradientBrush>
+            </ListBox.Background>
+        </ListBox>
+        <ProgressBar x:Name="ExpProgressBar" HorizontalAlignment="Left" Height="30" Margin="230,120,0,0" VerticalAlignment="Top" Width="540" ValueChanged="ExpProgressBar_ValueChanged">
+            <ProgressBar.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF004B0E"/>
+                    <GradientStop Color="#FF004B0E" Offset="1"/>
+                    <GradientStop Color="#FF06B025" Offset="0.5"/>
+                </LinearGradientBrush>
+            </ProgressBar.Foreground>
+        </ProgressBar>
+        <Label x:Name="Explbl" Content="EXP" HorizontalAlignment="Left" Margin="485,125,0,0" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" Foreground="Black"/>
         <TextBox x:Name="TextBoxTest" HorizontalAlignment="Left" Height="24" Margin="696,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="74"/>
     </Grid>
 </Window>

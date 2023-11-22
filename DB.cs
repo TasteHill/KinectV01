@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Effects;
 using System.Windows.Forms;
 using KinectV01;
+using System.Data;
 
 namespace FirstPage
 {
@@ -19,7 +20,7 @@ namespace FirstPage
         public List<Idol> getIdolsFromDB()                                  //아이돌 리스트 생성
         {
             MySqlConnection connection = new MySqlConnection(strconn);
-            string query = "select * from idol natural join score natural join user;";
+            string query = "SELECT idol.idol_no,idol.idol_name,user.user_no,score.score,user.user_name FROM idol LEFT JOIN score ON score.idol_no = idol.idol_no LEFT JOIN user ON user.user_no = score.user_no ;";
             MySqlCommand cmd = new MySqlCommand(query, connection);
             List<Idol> resultIdols = new List<Idol>();
 
@@ -30,7 +31,8 @@ namespace FirstPage
                 using (MySqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
+                    { 
+
                         String idolName = reader["idol_name"].ToString();
                         String userName = reader["user_name"].ToString();
                         int idolnum = int.Parse(reader["idol_no"].ToString());
@@ -47,21 +49,40 @@ namespace FirstPage
                                 break;
                             }
                         }
-
-                        if (isIdolExist)
+                        if (userName.Equals(null))
                         {
-                            existIdol.Inumber = idolnum;
-                            existIdol.IdolUsers.Add(userName, userScore);
-                            existIdol.IScore += userScore;
+                            if (isIdolExist)
+                            {
+                                existIdol.Inumber = idolnum;
+                               
+                                existIdol.IScore += userScore;
 
+                            }
+                            else
+                            {
+                                Idol idol = new Idol(idolName);
+                                idol.Inumber = idolnum;
+                                idol.IScore += userScore;
+                                resultIdols.Add(idol);
+                            }
                         }
-                        else
-                        {
-                            Idol idol = new Idol(idolName);
-                            idol.Inumber = idolnum;
-                            idol.IdolUsers.Add(userName, userScore);
-                            idol.IScore += userScore;
-                            resultIdols.Add(idol);
+                        else {
+                            if (isIdolExist)
+                            {
+                                existIdol.Inumber = idolnum;
+                                existIdol.IdolUsers.Add(userName, userScore);
+                                existIdol.IScore += userScore;
+
+                            }
+                            else
+                            {
+                                Idol idol = new Idol(idolName);
+                                idol.Inumber = idolnum;
+                                existIdol.IdolUsers.Add(userName, userScore);
+                                idol.IScore += userScore;
+                                resultIdols.Add(idol);
+                            }
+
                         }
                     }
                     reader.Close();
@@ -79,7 +100,7 @@ namespace FirstPage
         public List<User> getUserFromDB()                              //유저 리스트 생성
         {
             MySqlConnection connection = new MySqlConnection(strconn);
-            string query = "select * from idol natural join score natural join user;";
+            string query = "SELECT user.user_no,user.user_name,idol.idol_name,idol.idol_no,score.score FROM user LEFT JOIN score ON user.user_no = score.user_no LEFT JOIN idol ON score.idol_no = idol.idol_no;";
             MySqlCommand cmd = new MySqlCommand(query, connection);
             List<User> resultUsers = new List<User>();
 
@@ -107,22 +128,41 @@ namespace FirstPage
                                 break;
                             }
                         }
-
-                        if (isUserExist)
+                        if (idolName.Equals(null))
                         {
-                            existUser.Unumber = usernum;
-                            existUser.UserIdols.Add(idolName, userScore);
-                            existUser.UScore += userScore;
+                            if (isUserExist)
+                            {
+                                existUser.Unumber = usernum;
+                                existUser.UScore += userScore;
+
+                            }
+                            else
+                            {
+                                User User = new User();
+                                User.Unumber = usernum;
+                                User.UName = userName;
+                                User.UScore += userScore;
+                                resultUsers.Add(User);
+                            }
 
                         }
-                        else
-                        {
-                            User User = new User();
-                            User.Unumber = usernum;
-                            User.UName = userName;
-                            User.UserIdols.Add(idolName, userScore);
-                            User.UScore += userScore;
-                            resultUsers.Add(User);
+                        else {
+                            if (isUserExist)
+                            {
+                                existUser.Unumber = usernum;
+                                existUser.UserIdols.Add(idolName, userScore);
+                                existUser.UScore += userScore;
+
+                            }
+                            else
+                            {
+                                User User = new User();
+                                User.Unumber = usernum;
+                                User.UName = userName;
+                                User.UserIdols.Add(idolName, userScore);
+                                User.UScore += userScore;
+                                resultUsers.Add(User);
+                            }
                         }
                     }
                     reader.Close();
@@ -162,6 +202,8 @@ namespace FirstPage
                 }
             }
 
+
+
             if (isUserExist && isIdolExist)                     //둘다 있으면
             {
                 MessageBox.Show("닉네임: " + userName + "님 환영합니다!");
@@ -169,108 +211,87 @@ namespace FirstPage
             }
             else if (isUserExist && !isIdolExist)                               //아이돌명이 없으면 
             {
-                InsertNewIdolName(IdolName);
+                InsertNewIdolName(IdolName, userList.Count + 1);
                 MessageBox.Show("닉네임: " + userName + "님 환영합니다!");
                 return userName + " " + IdolName;
             }
             else if(!isUserExist && isIdolExist)
             {
-                InsertNewNickName(userName);
+                InsertNewNickName(userName, userList.Count+1);
                 return userName + " " + IdolName;
             }
-            else if(!isUserExist && !isIdolExist)
+            else
             {
-                InsertNewNickName(userName);
-                InsertNewIdolName(IdolName);
+                InsertNewNickName(userName, userList.Count + 1);
+                InsertNewIdolName(IdolName, idolList.Count+1);
                 return userName + " " + IdolName;
             }
         }
 
-        private void InsertNewNickName(string newNickName)
+        private void InsertNewNickName(string newNickName, int count)
         {
             MySqlConnection connection = new MySqlConnection(strconn);
-            connection.Open();
-            string sql = "Select user_name from user";
-            MySqlCommand cmd = new MySqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@newNickName", newNickName);
-            int count = 1;
 
             try
             {
-                using (MySqlDataReader read = cmd.ExecuteReader())
-                {
-                    while (read.Read())
-                    {
-                        if (read.HasRows)
-                        {
-                            count++;
-                        }
-                    }
-                    read.Close();
-                }
-            }
-            catch 
-            {
-            }
+                connection.Open();
+                // 안전한 쿼리 구성을 위해 매개변수화된 쿼리 사용
+                string sql = "INSERT INTO user(user_no, user_name) VALUES (@count, @newNickName)";
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
 
-            try
-            {
-                
-                sql = "INSERT INTO user(user_no, user_name) VALUES ('"+count+"', '"+newNickName+"')";
-                cmd = new MySqlCommand(sql, connection);
-                using (MySqlDataReader readName = cmd.ExecuteReader())
-                {
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("사용자 정보 등록 완료");
-                    readName.Close();
-                }
+                // 매개변수 값 할당
+                cmd.Parameters.AddWithValue("@count", count);
+                cmd.Parameters.AddWithValue("@newNickName", newNickName);
+
+                // INSERT 쿼리 실행
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("사용자 정보 등록 완료");
             }
-            catch 
+            catch (Exception ex)
             {
+                MessageBox.Show("Error 발생: " + ex.Message);
+            }
+            finally
+            {
+                // 데이터베이스 연결 닫기
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
         }
 
-        private void InsertNewIdolName(string IdolName)
+
+        private void InsertNewIdolName(string IdolName, int count)
         {
             MySqlConnection connection = new MySqlConnection(strconn);
-            connection.Open();
-            string sql = "Select idol_name from idol";
-            MySqlCommand cmd = new MySqlCommand(sql, connection);
-            cmd.Parameters.AddWithValue("@newNickName", IdolName);
-            int count = 0;
 
             try
             {
-                using (MySqlDataReader read = cmd.ExecuteReader())
-                {
-                    while (read.Read())
-                    {
-                        if (read.HasRows)
-                        {
-                            count++;
-                        }
-                    }
-                    read.Close();
-                }
-            }
-            catch 
-            {
-            }
+                connection.Open();
+                // 안전한 쿼리 구성을 위해 매개변수화된 쿼리 사용
+                string sql = "INSERT INTO idol(idol_no, idol_name) VALUES (@count, @IdolName)";
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
 
-            try
-            {
-                count++;
-                cmd = new MySqlCommand(sql, connection);
-                sql = "INSERT INTO idol(idol_no, idol_name) VALUES ('" + count + "', '"+ IdolName+"')";
-                using (MySqlDataReader readName = cmd.ExecuteReader())
-                {
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("아이돌 정보 등록 완료");
-                    readName.Close();
-                }
+                // 매개변수 값 할당
+                cmd.Parameters.AddWithValue("@count", count);
+                cmd.Parameters.AddWithValue("@IdolName", IdolName);
+
+                // INSERT 쿼리 실행
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("사용자 정보 등록 완료");
             }
-            catch 
+            catch (Exception ex)
             {
+                MessageBox.Show("Error 발생: " + ex.Message);
+            }
+            finally
+            {
+                // 데이터베이스 연결 닫기
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
 
         }

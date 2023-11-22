@@ -25,8 +25,8 @@
                 </behaviors:EventTrigger>
             </behaviors:Interaction.Triggers>
         </cef:ChromiumWebBrowser>
-        <f:RankMainWindow x:Name="rankWindow" HorizontalAlignment="Center" Margin="1180,75,0,0" VerticalAlignment="Top" Width="295"/>
-        <Button x:Name="resetBtn" Content="Reset"  Foreground="White" Command="{Binding CreateEnterWindowCommand}" HorizontalAlignment="Left" Margin="1464,0,0,10" VerticalAlignment="Bottom" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13">
+        <f:RankMainWindow x:Name="rankWindow" HorizontalAlignment="Right" Margin="0,75,60,0" VerticalAlignment="Top" Width="295"/>
+        <Button x:Name="resetBtn" Content="Reset"  Foreground="White" Command="{Binding CreateEnterWindowCommand}" HorizontalAlignment="Right" Margin="0,0,50,10" VerticalAlignment="Bottom" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="100"/>
@@ -36,7 +36,7 @@
                 <ImageBrush ImageSource="/btncolor.png"/>
             </Button.Background>
         </Button>
-        <Button Content="Button" Foreground="White" HorizontalAlignment="Left" Margin="1350,0,0,10" VerticalAlignment="Bottom" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13">
+        <Button Content="Button" Foreground="White" HorizontalAlignment="Right" Margin="0,0,150,10" VerticalAlignment="Bottom" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13">
             <Button.Background>
                 <ImageBrush ImageSource="/btncolor.png"/>
             </Button.Background>

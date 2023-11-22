@@ -121,6 +121,9 @@
     <Compile Include="UserInfoControls\RankMainWindow.xaml.cs">
       <DependentUpon>RankMainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserInfoControls\UserInfoDetail.xaml.cs">
+      <DependentUpon>UserInfoDetail.xaml</DependentUpon>
+    </Compile>
     <Page Include="annime\ScoreProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -172,6 +175,10 @@
     <Page Include="UserInfoControls\RankMainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserInfoControls\UserInfoDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

@@ -44,18 +44,18 @@ namespace KinectV01
 
         private async Task InitializeApplicationAsync()
         {
-            DB DB = new DB();
+            //DB DB = new DB();
 
-            List<Idol> idols = DB.getIdolsFromDB();
+            //List<Idol> idols = DB.getIdolsFromDB();
 
-            foreach(var idol in idols)
-            {
-                Console.WriteLine(idol.IName);
+            //foreach(var idol in idols)
+            //{
+            //    Console.WriteLine(idol.IName);
 
-            }
+            //}
 
-            Console.WriteLine("출력 끝");
-            Task.Delay(1000).Wait();
+            //Console.WriteLine("출력 끝");
+            //Task.Delay(1000).Wait();
         }
     }
 }

@@ -85,7 +85,7 @@ namespace KinectV01
 
         public void userAndIdolEntered(string idolName, string userName)
         {
-            DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
+            //DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
 
 
         }

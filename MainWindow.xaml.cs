@@ -94,9 +94,12 @@ namespace KinectV01
             this.rankWindow.AddIdol(e.Idol);
         }
 
-        private void btndebug_Click(object sender, RoutedEventArgs e)
+
+        private void UserInfoBtn_Click(object sender, RoutedEventArgs e)
         {
-            
+            UserInfoDetail abc = new UserInfoDetail();
+            abc.Show();
         }
+
     }
 }

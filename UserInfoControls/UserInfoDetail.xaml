@@ -24,7 +24,7 @@
                 </LinearGradientBrush>
             </ListBox.Background>
         </ListBox>
-        <ProgressBar x:Name="ExpProgressBar" HorizontalAlignment="Left" Height="30" Margin="230,120,0,0" VerticalAlignment="Top" Width="540" ValueChanged="ExpProgressBar_ValueChanged">
+        <ProgressBar x:Name="ExpProgressBar" HorizontalAlignment="Left" Height="30" Margin="230,120,0,0" VerticalAlignment="Top" Width="540">
             <ProgressBar.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF004B0E"/>

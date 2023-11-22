@@ -51,5 +51,15 @@
 
         <Button x:Name="btndebug" Command="{Binding startDisplayColorStreamCommand}" CommandParameter="{Binding ElementName=image01}" Content="Button" HorizontalAlignment="Left" Margin="1260,829,0,0" VerticalAlignment="Top" Height="45" Width="85"/>
         <Image x:Name="image01" HorizontalAlignment="Left" Height="377" Margin="1260,442,0,0" VerticalAlignment="Top" Width="277"/>
+        <Button x:Name="UserInfoBtn" Content="UserInfo"  Foreground="White" Command="{Binding CreateEnterWindowCommand}" HorizontalAlignment="Right" Margin="0,15,50,0" VerticalAlignment="Top" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13" Click="UserInfoBtn_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="100"/>
+                </Style>
+            </Button.Resources>
+            <Button.Background>
+                <ImageBrush ImageSource="/btncolor.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

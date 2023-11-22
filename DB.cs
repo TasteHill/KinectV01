@@ -179,7 +179,7 @@ namespace FirstPage
         //EnterName에서 호출 유저이름, 아이돌이름, 아이돌리스트, 유저리스트를 받고
         //DB에 상황에 맞게 데이터 저장 후
         //'유저명 아이돌명' 형태의 스트링 반환
-        /*public String SetUserAndIdol(String userName, String IdolName, List<Idol> idolList, List<User> userList)
+        public String SetUserAndIdol(String userName, String IdolName, List<Idol> idolList, List<User> userList)
         {
 
             bool isUserExist = false;
@@ -227,7 +227,7 @@ namespace FirstPage
                 return userName + " " + IdolName;
             }
         }
-        */
+        
 
         private void InsertNewNickName(string newNickName, int count)
         {

@@ -22,37 +22,24 @@ namespace KinectV01.UserInfoControls
         public UserInfoDetail()
         {
             InitializeComponent();
-            TextBoxTest.TextChanged += TextBox_TextChanged;
+            TextBoxTest.TextChanged += TextBox_TextChanged;//임시로 만든 textbox에 값을 입력하면(totalScore 대체)입력된 값에 따라 level표시.
 
         }
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            // TextBox에 입력된 값 가져오기
-            if (int.TryParse(TextBoxTest.Text, out int inputValue))
+            int number;
+            if (int.TryParse(TextBoxTest.Text, out number))
             {
-                // 입력된 값으로 ProgressBar 업데이트
-                UpdateProgressBar(inputValue);
+                if (number >= 100)
+                {
+                    ExpProgressBar.Value = number % 100;
+                }
+                else
+                {
+                    ExpProgressBar.Value = number;
+                }
+                UserLevellbl.Content = "User Level : " + (number / 100).ToString();
             }
-        }
-        private void UpdateProgressBar(int value)
-        {
-            progressBarValue = value;
-            if (progressBarValue <= 100)
-            {
-                ExpProgressBar.Value = progressBarValue;
-
-                // 10% 증가할 때 마다 점수 출력
-
-            }
-            else
-            {
-                ExpProgressBar.Value = 100;
-            }
-        }
-
-        private void ExpProgressBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            
         }
     }
 }

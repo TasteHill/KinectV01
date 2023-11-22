@@ -30,7 +30,29 @@ namespace KinectV01
             var viewModel = (MainViewModel)Application.Current.TryFindResource("mainViewModel");
             viewModel.EnterComplete += ViewModel_EnterComplete;
             viewModel.IdolExist += setDataContextToExistCelebPointInstance;
+            getIdolAndUserFromDB();
         }
+
+        public void getIdolAndUserFromDB()
+        {
+            var viewModel = (MainViewModel)Application.Current.TryFindResource("mainViewModel");
+            var idols = viewModel.getIdolAndUserFromDB();
+
+            foreach(var idol in idols)
+            {
+                rankWindow.AddIdol(idol);
+            }
+
+        }
+
+
+
+
+
+
+
+
+
 
         private void setDataContextToExistCelebPointInstance(object sender, SendIdolContextArgs e)
         {

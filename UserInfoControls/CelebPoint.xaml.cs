@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -26,12 +27,6 @@ namespace KinectV01.UserInfoControls
         {
             InitializeComponent();
             this.Height = 80;
-            AddGridChild();
-            AddGridChild();
-            AddGridChild();
-            AddGridChild();
-            AddGridChild();
-            AddGridChild();
 
         }
 
@@ -69,10 +64,12 @@ namespace KinectV01.UserInfoControls
 
 
         List<CelebPointPlayerInfo> celebPointPlayerInfos = new List<CelebPointPlayerInfo>();
-        private void AddGridChild()
+        public void AddGridChild(string name, string point)
         {
             CelebPointPlayerInfo celebPointPlayerInfo = new CelebPointPlayerInfo();
             celebPointPlayerInfos.Add(celebPointPlayerInfo);
+            celebPointPlayerInfo.lblUserName.Content = name;
+            celebPointPlayerInfo.lblUserPoint.Content = point;
             double topMargin = (celebPointPlayerInfos.Count - 1) * (celebPointPlayerInfo.Height + 4) + 4;
             celebPointPlayerInfo.VerticalAlignment = VerticalAlignment.Top;
             celebPointPlayerInfo.HorizontalAlignment = HorizontalAlignment.Stretch;

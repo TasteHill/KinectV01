@@ -18,58 +18,13 @@ namespace KinectV01
         public event PropertyChangedEventHandler PropertyChanged;
 
         private List<Idol> Idols = new List<Idol>();
+        private List<User> users = new List<User>();
 
         public List<Idol> GetIdols()
         {
             return this.Idols;
         }
 
-        public Idol getIdol(String name)
-        {
-            foreach (Idol idol in this.Idols)
-            {
-                if (idol.IName.Equals(name))
-                {
-                    return idol;
-                }
-            }
-            return null;
-        }
-
-        public bool isIdolExist(String name)
-        {
-            foreach (Idol idol in this.Idols)
-            {
-                if (idol.IName.Equals(name))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-
-        public void addIdol(Idol idol)
-        {
-            this.Idols.Add(idol);
-        }
-
-        public int CurrentIdolScore
-        {
-            get
-            {
-                int score = 0;
-                score = this.getIdol(CurrentInfo.CURRENT_IDOL_NAME).IScore;
-                return score;
-            }
-            set
-            {
-                var idol = this.getIdol(CurrentInfo.CURRENT_IDOL_NAME);
-                idol.IScore = value;
-                OnPropertyChanged(nameof(CurrentIdolScore));
-
-            }
-        }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {
@@ -88,7 +43,7 @@ namespace KinectV01
         {
             kinectController.StartCapturingPlayerMovement((double score) =>
             {
-                this.CurrentIdolScore += (int)(score*100);
+                //this.CurrentIdolScore += (int)(score*100);
             }, out CancellationTokenSource startPointCalcCanceltokensource);
         }
         
@@ -106,11 +61,34 @@ namespace KinectV01
 
 
 
+        DB DB = new DB();
+        public List<Idol> getIdolAndUserFromDB()
+        {
+            var idols = DB.getIdolsFromDB();
+            var users = DB.getUserFromDB();
 
-        ///<summary>
-        ///키넥트 초기화
-        /// </summary>
 
+            
+            foreach(var idol in idols)
+            {
+                this.Idols.Add(idol);
+            }
+
+            foreach (var user in users)
+            {
+                this.users.Add(user);
+            }
+
+            return idols;
+        }
+
+
+        public void userAndIdolEntered(string idolName, string userName)
+        {
+            DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
+
+
+        }
 
 
 

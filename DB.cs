@@ -167,13 +167,18 @@ namespace FirstPage
                 MessageBox.Show("닉네임: " + userName + "님 환영합니다!");
                 return userName + " " + IdolName;
             }
-            else if (isUserExist)                               //아이돌명이 없으면 
+            else if (isUserExist && !isIdolExist)                               //아이돌명이 없으면 
             {
                 InsertNewIdolName(IdolName);
                 MessageBox.Show("닉네임: " + userName + "님 환영합니다!");
                 return userName + " " + IdolName;
             }
-            else
+            else if(!isUserExist && isIdolExist)
+            {
+                InsertNewNickName(userName);
+                return userName + " " + IdolName;
+            }
+            else if(!isUserExist && !isIdolExist)
             {
                 InsertNewNickName(userName);
                 InsertNewIdolName(IdolName);
@@ -184,10 +189,11 @@ namespace FirstPage
         private void InsertNewNickName(string newNickName)
         {
             MySqlConnection connection = new MySqlConnection(strconn);
+            connection.Open();
             string sql = "Select user_name from user";
             MySqlCommand cmd = new MySqlCommand(sql, connection);
             cmd.Parameters.AddWithValue("@newNickName", newNickName);
-            int count = 0;
+            int count = 1;
 
             try
             {
@@ -203,15 +209,14 @@ namespace FirstPage
                     read.Close();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                MessageBox.Show("Error 발생: " + ex.Message);
             }
 
             try
             {
-
-                sql = "INSERT INTO user(user_no, user_name) VALUES (count, @newNickName)";
+                
+                sql = "INSERT INTO user(user_no, user_name) VALUES ('"+count+"', '"+newNickName+"')";
                 cmd = new MySqlCommand(sql, connection);
                 using (MySqlDataReader readName = cmd.ExecuteReader())
                 {
@@ -220,15 +225,15 @@ namespace FirstPage
                     readName.Close();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                MessageBox.Show("Error 발생: " + ex.Message);
             }
         }
 
         private void InsertNewIdolName(string IdolName)
         {
             MySqlConnection connection = new MySqlConnection(strconn);
+            connection.Open();
             string sql = "Select idol_name from idol";
             MySqlCommand cmd = new MySqlCommand(sql, connection);
             cmd.Parameters.AddWithValue("@newNickName", IdolName);
@@ -248,16 +253,15 @@ namespace FirstPage
                     read.Close();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                MessageBox.Show("Error 발생: " + ex.Message);
             }
 
             try
             {
-
-                sql = "INSERT INTO idol(idol_no, idol_name) VALUES (count, @newNickName)";
+                count++;
                 cmd = new MySqlCommand(sql, connection);
+                sql = "INSERT INTO idol(idol_no, idol_name) VALUES ('" + count + "', '"+ IdolName+"')";
                 using (MySqlDataReader readName = cmd.ExecuteReader())
                 {
                     cmd.ExecuteNonQuery();
@@ -265,9 +269,8 @@ namespace FirstPage
                     readName.Close();
                 }
             }
-            catch (Exception ex)
+            catch 
             {
-                MessageBox.Show("Error 발생: " + ex.Message);
             }
 
         }
@@ -278,7 +281,7 @@ namespace FirstPage
         public void InsertNewScore(int user_no, int idol_no, string score)
         {
             MySqlConnection connection = new MySqlConnection(strconn);
-
+            connection.Open();
             try
             {
                 string sql = "INSERT INTO score(user_no, idol_no, score) VALUES (user_no, idol_no, score)";

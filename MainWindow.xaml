@@ -13,7 +13,6 @@
     <Window.DataContext>
         <StaticResource ResourceKey="mainViewModel"/>
     </Window.DataContext>
-
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/background_frame.png"/>

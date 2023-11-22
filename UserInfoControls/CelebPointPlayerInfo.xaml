@@ -14,7 +14,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Image Height="46" VerticalAlignment="Center" Source="/sampleimg.jpg" Grid.Column="1" HorizontalAlignment="Left" Width="46"/>
-        <Label Content="닉네임" FontFamily="NEXON Football Gothic B" Foreground="White" HorizontalAlignment="Left" Margin="52,11,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0" Grid.Column="1" Width="50"/>
-        <Label Content="점수" FontFamily="NEXON Football Gothic B" Foreground="White" HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Center" Height="38" Width="68" FontSize="18" Grid.Column="1"/>
+        <Label x:Name="lblUserName" Content="닉네임" FontFamily="NEXON Football Gothic B" Foreground="White" HorizontalAlignment="Left" Margin="52,11,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0" Grid.Column="1" Width="50"/>
+        <Label x:Name="lblUserPoint" Content="점수" FontFamily="NEXON Football Gothic B" Foreground="White" HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Center" Height="38" Width="68" FontSize="18" Grid.Column="1"/>
     </Grid>
 </UserControl>

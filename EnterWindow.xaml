@@ -24,8 +24,8 @@
         </Button>
         <Label x:Name="UserNameLbl" Content="User Name :" HorizontalAlignment="Center" Foreground="White" Margin="0,132,230,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="16"/>
         <Label x:Name="UserNameLbl_Copy" Content="Idol Name :" HorizontalAlignment="Center" Foreground="White" Margin="0,203,230,0" Grid.Row="1" VerticalAlignment="Top" FontFamily="NEXON Football Gothic B" FontSize="16"/>
-        <TextBox x:Name="idolName" Text="{Binding IDolID, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Margin="0,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="14"/>
-        <TextBox x:Name="userName" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="25" Margin="0,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="14"/>
+        <TextBox x:Name="idolName" Text="{Binding IDolID, Mode=OneWay}" HorizontalAlignment="Center" Margin="0,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Height="25" Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="14"/>
+        <TextBox x:Name="userName" Text="{Binding UserName, Mode=OneWay}" HorizontalAlignment="Center" Height="25" Margin="0,134,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"  Grid.Row="1" FontFamily="NEXON Football Gothic B" FontSize="14"/>
 
     </Grid>
 </Window>

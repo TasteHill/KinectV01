@@ -34,7 +34,17 @@ namespace KinectV01.UserInfoControls
             childCeleb.VerticalAlignment = VerticalAlignment.Top;
             childCeleb.HorizontalAlignment = HorizontalAlignment.Stretch;
             childCeleb.lblIdolName.Content = idol.IName;
-            childCeleb.lblIdolPoint.Content = 0;
+            childCeleb.lblIdolPoint.Content = idol.IScore;
+
+            var userNames = idol.IdolUsers.Keys.ToList();
+            var userPoints = idol.IdolUsers.Values.ToList();
+
+            
+            for(int i = 0; i<idol.IdolUsers.Count; i++)
+            {
+                childCeleb.AddGridChild(userNames[i], userPoints[i].ToString());
+            }
+            
 
 
             double top = 10;

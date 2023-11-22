@@ -71,5 +71,10 @@ namespace KinectV01
             }
             this.rankWindow.AddIdol(e.Idol);
         }
+
+        private void btndebug_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }

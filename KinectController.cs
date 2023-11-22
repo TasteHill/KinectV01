@@ -15,6 +15,8 @@ using System.Management;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using KinectV01;
+using System.Diagnostics;
+using CefSharp.DevTools.Debugger;
 
 namespace FirstPage
 {
@@ -35,6 +37,7 @@ namespace FirstPage
                 nui = KinectSensor.KinectSensors.FirstOrDefault
                     (sensor => sensor.Status == KinectStatus.Connected);
                 SetupUSBEventWatchers();
+
                 nui.ColorStream.Enable();
                 nui.DepthStream.Enable();
                 nui.SkeletonStream.Enable();
@@ -80,6 +83,10 @@ namespace FirstPage
                     removeWatcherFlag = false;
                     MessageBox.Show("키넥트 해제됨");
                     //Debug.WriteLine("remove called");
+                    //토큰 취소
+                    ClearEventHandler(lastImage);
+                    nui.ColorStream.Disable();
+                    nui.Stop();
                 }
                 insertWatcherFlag = true;
             });
@@ -90,29 +97,28 @@ namespace FirstPage
 
         private async void ReconnectKinect()
         {
-            if (nui == null)
-            {
                 await Task.Run(() =>
                 {
                     while (KinectSensor.KinectSensors.Count == 0)
                     {
                         Task.Delay(1000);
                     }
-                    nui = KinectSensor.KinectSensors[0];
-                });
-            }
-            else
-            {
-                await Task.Run(() =>
-                {
-
-                    while (nui.Status == KinectStatus.Disconnected)
+                    while (true)
                     {
-                        Task.Delay(1000);
+                        nui = KinectSensor.KinectSensors.FirstOrDefault
+                        (sensor => sensor.Status == KinectStatus.Connected);
+                        if(nui != null)
+                        {
+                            break;
+                        }
                     }
+                    
                 });
-            }
+
             MessageBox.Show("키넥트 다시 연결됨");
+            nui.Start();
+            nui.ColorStream.Enable();
+            DisplayColorStreamAt(lastImage);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -125,10 +131,13 @@ namespace FirstPage
         /// 키넥트 화면 출력
         /// </summary>
         /// <param name="image"></param>
+        /// 
+        public Image lastImage = null;
         public void DisplayColorStreamAt(Image image)
         {
             if (nui == null) return;
             if (nui.ColorStream == null) nui.ColorStream.Enable();
+            this.lastImage = image;
 
             EventHandler<Microsoft.Kinect.ColorImageFrameReadyEventArgs> handler = null;
 

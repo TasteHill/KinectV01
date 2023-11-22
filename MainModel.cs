@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using FirstPage;
 using Microsoft.Kinect;
 
@@ -81,16 +82,10 @@ namespace KinectV01
         ///키넥트 관련
         ///</summary>
 
-        
 
+        KinectController kinectController = new KinectController();
         public void startPointCalc()
         {
-            var nui = KinectSensor.KinectSensors[0];
-
-            KinectController kinectController = new KinectController();
-
-
-
             kinectController.StartCapturingPlayerMovement((double score) =>
             {
                 this.CurrentIdolScore += (int)(score*100);
@@ -102,6 +97,13 @@ namespace KinectV01
         ///DB 관련
         /// </summary>
         
+        public void startDisplayColorStream(object imageObj)
+        {
+            Image targetImage = imageObj as Image;
+            kinectController.DisplayColorStreamAt(targetImage);
+        }
+
+
 
 
 

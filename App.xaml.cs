@@ -55,7 +55,7 @@ namespace KinectV01
             }
 
             Console.WriteLine("출력 끝");
-            Task.Delay(5000).Wait();
+            Task.Delay(1000).Wait();
         }
     }
 }

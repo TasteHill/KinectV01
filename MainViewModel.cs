@@ -124,8 +124,16 @@ namespace KinectV01
             EnterCompleteCommand = new RelayCommand(EnterCompleteMethod);
             this.model.PropertyChanged += Model_PropertyChanged;
             startPointCalcCommand = new RelayCommand(startPointCalcMethod);
+            startDisplayColorStreamCommand = new RelayCommand(startDisplayColorStreamMethod);
+
+        }
 
 
+        public ICommand startDisplayColorStreamCommand { get; private set; }
+
+        public void startDisplayColorStreamMethod(object parameter)
+        {
+            this.model.startDisplayColorStream(parameter);
         }
 
 

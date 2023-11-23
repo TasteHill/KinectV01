@@ -72,6 +72,8 @@ namespace KinectV01
                 currentUser.UScore += (int)(score * 100);
                 currentUser.UserIdols[currentIdol.IName] += (int)(score * 100);
 
+                currentScore += (int)(score * 100);
+
                 UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(this.currentIdol, this.currentUser));
 
             }, out CancellationTokenSource startPointCalcCanceltokensource);
@@ -122,7 +124,7 @@ namespace KinectV01
 
             MessageBox.Show($"현재 아이돌 : {currentIdol.IName} 현재 유저 : {currentUser.UName}");
             DB.updateScoreTable(currentIdol.Inumber, currentUser.Unumber, currentScore);
-
+            currentScore = 0;
             UpdateRank?.Invoke(this, new args.UpdateRankArgs(this.Idols, this.users));
         }
 

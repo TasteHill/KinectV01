@@ -119,9 +119,14 @@ namespace KinectV01
         public void initCurrentUserAndIdol(string idolName, string userName)
         {
             var currentInfo = DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
+            if(currentIdol != null || currentUser != null) { 
+            if (currentIdol.IName != idolName || currentUser.UName != userName)
+                DB.updateScoreTable(currentIdol.Inumber, currentUser.Unumber, currentScore);
+                currentScore = 0;
+            }
+
             currentIdol = currentInfo.Item1;
             currentUser = currentInfo.Item2;
-
             MessageBox.Show($"현재 아이돌 : {currentIdol.IName} 현재 유저 : {currentUser.UName}");
             DB.updateScoreTable(currentIdol.Inumber, currentUser.Unumber, currentScore);
             currentScore = 0;

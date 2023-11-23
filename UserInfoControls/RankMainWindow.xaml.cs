@@ -136,5 +136,50 @@ namespace KinectV01.UserInfoControls
             stackPanel.Children.Add(celebOfPlayer);
             
         }
+
+        public void reset()
+        {
+            this.gridList.Children.Clear();
+            this.celebPointComps.Clear();
+        }
+
+
+
+
+
+        public void updateScoreAt(Idol idol,User user, int score)
+        {
+            try
+            {
+                this.Dispatcher.Invoke(() => // UI 스레드에서 실행
+                {
+                    //MessageBox.Show("updatescoreat 함수 시작");
+                    var children = this.gridList.Children;
+                    //if (children.Count == 0) MessageBox.Show("null값");
+
+                    foreach (var child in children)
+                    {
+                        if (child is CelebPoint celebPoint && celebPoint.lblIdolName.Content.Equals(idol.IName))
+                        {
+                            celebPoint.lblIdolPoint.Content = score;
+                            foreach(var innerchild in celebPoint.gridList.Children)
+                            {
+                                if (((CelebPointPlayerInfo)innerchild).lblUserName.Content.Equals(user.UName))
+                                {
+                                    ((CelebPointPlayerInfo)innerchild).lblUserPoint.Content = idol.IdolUsers[user.UName];
+                                }
+                            }
+                            
+
+                        }
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+        }
+
     }
 }

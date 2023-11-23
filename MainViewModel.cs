@@ -35,16 +35,13 @@ namespace KinectV01
 
         public ICommand EnterCommand { get; private set; }
 
-        public event EventHandler<args.EnterEventArgs> EnterComplete;
-
-        public event EventHandler<args.SendIdolContextArgs> IdolExist;
 
         private void EnterCompleteMethod()
         {
             string userName = UserName;
             string idolName = IDolID;
 
-            this.model.userAndIdolEntered(idolName, userName);
+            this.model.initCurrentUserAndIdol(idolName, userName);
             navigator.exitEnterWindow();
         }
 
@@ -83,7 +80,8 @@ namespace KinectV01
 
             startPointCalcCommand = new RelayCommand(startPointCalcMethod);
             startDisplayColorStreamCommand = new RelayCommand(startDisplayColorStreamMethod);
-
+            this.model.UpdateRank += sendCurrentUserAndIdolToView;
+            this.model.UpdateUiScore += sendCurrentIdolScoreToView;
         }
 
 
@@ -108,6 +106,23 @@ namespace KinectV01
         public string IDolID { get; set; }
 
         
+        public void sendCurrentUserAndIdolToView(object sender, args.UpdateRankArgs e)
+        {
+            UpdateRank?.Invoke(this, new args.UpdateRankArgs(e.Idols, e.Users));
+        }
 
+        public event EventHandler<args.UpdateRankArgs> UpdateRank;
+
+
+        /// <summary>
+        /// 점수 업데이트 이벤트
+        /// </summary>
+
+        public void sendCurrentIdolScoreToView(object sender, args.UpdateUiScoreArgs e)
+        {
+            UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(e.Idol, e.User));
+        }
+
+        public event EventHandler<args.UpdateUiScoreArgs> UpdateUiScore;
     }
 }

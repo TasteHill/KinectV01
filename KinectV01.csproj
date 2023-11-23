@@ -89,8 +89,8 @@
     <Compile Include="annime\ScoreProgressBar.xaml.cs">
       <DependentUpon>ScoreProgressBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="args\EnterEventArgs.cs" />
-    <Compile Include="args\SendIdolContextArgs.cs" />
+    <Compile Include="args\UpdateRankArgs.cs" />
+    <Compile Include="args\UpdateUiScoreArgs.cs" />
     <Compile Include="CurrentInfo.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="idol.cs" />

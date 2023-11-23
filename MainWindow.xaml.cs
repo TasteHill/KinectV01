@@ -28,71 +28,36 @@ namespace KinectV01
             InitializeComponent();
 
             var viewModel = (MainViewModel)Application.Current.TryFindResource("mainViewModel");
-            viewModel.EnterComplete += ViewModel_EnterComplete;
-            viewModel.IdolExist += setDataContextToExistCelebPointInstance;
-            //getIdolAndUserFromDB();
+            viewModel.UpdateRank += updateComponents;
+            viewModel.UpdateUiScore += updateComponentsScore;
+
         }
 
-        public void getIdolAndUserFromDB()
+        
+        private void updateComponents(object sender, args.UpdateRankArgs e)
         {
-            var viewModel = (MainViewModel)Application.Current.TryFindResource("mainViewModel");
-            var idols = viewModel.getIdolAndUserFromDB();
-
-            foreach(var idol in idols)
+            rankWindow.reset();
+            foreach(var idol in e.Idols)
             {
                 rankWindow.AddIdol(idol);
             }
-
         }
 
-
-
-
-
-
-
-
-
-
-        private void setDataContextToExistCelebPointInstance(object sender, SendIdolContextArgs e)
+        private void updateComponentsScore(object sender, args.UpdateUiScoreArgs e)
         {
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(rankWindow.gridList); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(rankWindow.gridList, i);
-
-                if (child is CelebPoint celebPoint)
-                {
-                    if((child as CelebPoint).lblIdolName.Content.Equals(e.IdolName))
-                    {
-                        (child as CelebPoint).DataContext = e.MainViewModel;
-                    }
-                    else
-                    {
-                        int tempIdolPoint = (int)(child as CelebPoint).lblIdolPoint.Content;
-                        (child as CelebPoint).DataContext = null;
-                        (child as CelebPoint).lblIdolPoint.Content = tempIdolPoint;
-
-                    }
-                }
-            }
+            rankWindow.updateScoreAt(e.Idol,e.User ,e.Idol.IScore);
         }
 
-        private void ViewModel_EnterComplete(object sender, EnterEventArgs e)
-        {
 
-            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(rankWindow.gridList); i++)
-            {
-                DependencyObject child = VisualTreeHelper.GetChild(rankWindow.gridList, i);
 
-                if (child is CelebPoint celebPoint)
-                {
-                    int tempIdolPoint = (int)(child as CelebPoint).lblIdolPoint.Content;
-                    (child as CelebPoint).DataContext = null;
-                    (child as CelebPoint).lblIdolPoint.Content = tempIdolPoint;
-                }
-            }
-            this.rankWindow.AddIdol(e.Idol);
-        }
+
+
+
+
+
+
+
+
 
 
         private void UserInfoBtn_Click(object sender, RoutedEventArgs e)

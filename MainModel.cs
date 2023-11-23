@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using CefSharp.DevTools.Audits;
 using FirstPage;
 using Microsoft.Kinect;
 
@@ -17,8 +19,20 @@ namespace KinectV01
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<Idol> Idols = new List<Idol>();
-        private List<User> users = new List<User>();
+        private List<Idol> Idols = null;
+        private List<User> users = null;
+
+        User currentUser = null;
+        Idol currentIdol = null;
+        int currentScore = 0;
+
+
+
+        public MainModel()
+        {
+            this.Idols = DB.getIdolsFromDB();
+            this.users = DB.getUserFromDB();
+        }
 
         public List<Idol> GetIdols()
         {
@@ -33,6 +47,14 @@ namespace KinectV01
 
 
 
+
+
+
+
+
+
+
+
         ///<summary>
         ///키넥트 관련
         ///</summary>
@@ -41,17 +63,26 @@ namespace KinectV01
         KinectController kinectController = new KinectController();
         public void startPointCalc()
         {
+            MessageBox.Show("측정 시작");
             kinectController.StartCapturingPlayerMovement((double score) =>
             {
-                //this.CurrentIdolScore += (int)(score*100);
+                currentIdol.IScore += (int)(score*100);
+                currentIdol.IdolUsers[currentUser.UName] += (int)(score * 100);
+
+                currentUser.UScore += (int)(score * 100);
+                currentUser.UserIdols[currentIdol.IName] += (int)(score * 100);
+
+                UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(this.currentIdol, this.currentUser));
+
             }, out CancellationTokenSource startPointCalcCanceltokensource);
         }
-        
+
+        public event EventHandler<args.UpdateUiScoreArgs> UpdateUiScore;
 
         ///<summary>
         ///DB 관련
         /// </summary>
-        
+
         public void startDisplayColorStream(object imageObj)
         {
             Image targetImage = imageObj as Image;
@@ -83,13 +114,22 @@ namespace KinectV01
         }
 
 
-        public void userAndIdolEntered(string idolName, string userName)
+        public void initCurrentUserAndIdol(string idolName, string userName)
         {
-            //DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
+            var currentInfo = DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
+            currentIdol = currentInfo.Item1;
+            currentUser = currentInfo.Item2;
 
+            MessageBox.Show($"현재 아이돌 : {currentIdol.IName} 현재 유저 : {currentUser.UName}");
+            DB.updateScoreTable(currentIdol.Inumber, currentUser.Unumber, currentScore);
 
+            UpdateRank?.Invoke(this, new args.UpdateRankArgs(this.Idols, this.users));
         }
 
+        ///위 메소드가 실행되면 발동
+        ///
+
+        public event EventHandler<args.UpdateRankArgs> UpdateRank;
 
 
 

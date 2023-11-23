@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace KinectV01.args
 {
-    public class EnterEventArgs : EventArgs
+    public class UpdateUiScoreArgs
     {
         public Idol Idol { get; private set; }
-        public string Message { get; private set; }
+        public User User { get; private set; }
 
-        public EnterEventArgs(Idol idol, string message = "")
+        public UpdateUiScoreArgs(Idol idol, User user)
         {
             Idol = idol;
-            Message = message;
+            User = user;
         }
     }
 }

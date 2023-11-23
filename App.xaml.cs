@@ -44,18 +44,37 @@ namespace KinectV01
 
         private async Task InitializeApplicationAsync()
         {
-            //DB DB = new DB();
-
+            DB DB = new DB();
+            Console.WriteLine(DB.nextCount("user"));
+            Console.WriteLine(DB.nextCount("idol"));
             //List<Idol> idols = DB.getIdolsFromDB();
 
-            //foreach(var idol in idols)
+            //foreach (var idol in idols)
             //{
-            //    Console.WriteLine(idol.IName);
-
+            //    Console.WriteLine(idol.IName + " " + idol.IScore + " ");
+            //    foreach (var idol2 in idol.IdolUsers)
+            //    {
+            //        Console.WriteLine(idol2.Key + " " + idol2.Value + " ");
+            //    }
+            //    Console.WriteLine("\n");
             //}
 
-            //Console.WriteLine("출력 끝");
-            //Task.Delay(1000).Wait();
+            //List<User> users = DB.getUserFromDB();
+
+            //foreach (var user in users)
+            //{
+            //    Console.WriteLine(user.UName + " " + user.UScore + " ");
+            //    foreach (var user2 in user.UserIdols)
+            //    {
+            //        Console.WriteLine(user2.Key + " " + user2.Value + " ");
+            //    }
+            //    Console.WriteLine("\n");
+            //}
+
+
+
+            Console.WriteLine("출력 끝");
+            Task.Delay(10).Wait();
         }
     }
 }

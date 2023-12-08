@@ -49,23 +49,31 @@ namespace KinectV01.annime
                 UpdateProgressBar(inputValue);
             }
         }
-        private void UpdateProgressBar(int value)
+        public void UpdateProgressBar(int value)
         {
-            progressBarValue = value;
-            if (progressBarValue <= 100)
+            try
             {
-                ProgressBar1.Value = progressBarValue;
-
-                // 10% 증가할 때 마다 점수 출력
-                if (progressBarValue % 10 == 0)
+                progressBarValue = value;
+                if (progressBarValue <= 5000)
                 {
-                    DisplayNumber(progressBarValue);
+                    ProgressBar1.Value = progressBarValue;
+
+                    // 10% 증가할 때 마다 점수 출력
+                    if (progressBarValue % 1 == 0)
+                    {
+                        //DisplayNumber(progressBarValue);
+                    }
+                }
+                else
+                {
+                    ProgressBar1.Value = 5000;
                 }
             }
-            else
+            catch(Exception e)
             {
-                ProgressBar1.Value = 100;
+                MessageBox.Show(e.ToString());
             }
+
         }
 
         private void DisplayNumber(int number)
@@ -108,7 +116,7 @@ namespace KinectV01.annime
             double progress = ProgressBar1.Value;
 
             // 만약 ProgressBar의 값이 20% 이상이면 crowd_image를 보이도록 설정
-            if (progress >= 20 && progress<50)
+            if (progress >= 1000 && progress<2500)
             {
                 crowd_image.Visibility = Visibility.Visible;
                 animation.To = 5; // TranslateTransform.Y
@@ -119,7 +127,7 @@ namespace KinectV01.annime
                 transform.BeginAnimation(TranslateTransform.YProperty, animation);
             }
 
-            else if (progress >= 50 && progress <70)
+            else if (progress >= 2500 && progress <3500)
             {
                 var countdownTimer1 = new DispatcherTimer();
                 countdownTimer1.Interval = TimeSpan.FromSeconds(0.2);
@@ -153,7 +161,7 @@ namespace KinectV01.annime
                 countdownTimer1.Start();
 
             }
-            if (progress >= 70 && progress<=100)
+            if (progress >= 3500 && progress<=5000)
             {
                 light_left.Visibility = Visibility.Visible;
                 light_right.Visibility = Visibility.Visible;

@@ -16,12 +16,6 @@
                 </Setter>
             </Style>
         </Grid.Resources>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="#FFAA73FF"/>
-                <GradientStop Color="#FF00B0C9" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
         <!-- 화면 상단에 ProgressBar 배치 -->
 
         <!-- 나머지 화면 내용을 아래에 배치 -->
@@ -63,7 +57,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="36" Margin="1129,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="106" RenderTransformOrigin="-0.538,4.139"/>
+        <TextBox x:Name="TextBox" HorizontalAlignment="Left" Height="36" Margin="1129,177,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="106" RenderTransformOrigin="-0.538,4.139" Opacity="0"/>
         <Image x:Name="crowd_image_glow_stick_1" HorizontalAlignment="Center" Height="414" Margin="0,0,0,-1" VerticalAlignment="Bottom" Width="1620" Source="/annime/crowd-removebg-preview_glow_stick_1.png" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
             <Image.RenderTransform>
                 <TransformGroup>
@@ -84,7 +78,7 @@
                 </TransformGroup>
             </Image.RenderTransform>
         </Image>
-        <ProgressBar x:Name="ProgressBar1" ValueChanged="ProgressBar_ValueChanged" VerticalAlignment="Bottom" Height="70" Margin="15,0,15,10" Style="{StaticResource CustomProgressBarStyle}" RenderTransformOrigin="0.48,-1.528" >
+        <ProgressBar x:Name="ProgressBar1" ValueChanged="ProgressBar_ValueChanged" VerticalAlignment="Bottom" Height="70" Margin="15,0,15,10" Style="{StaticResource CustomProgressBarStyle}" RenderTransformOrigin="0.48,-1.528" Maximum="5000" >
             <ProgressBar.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF510383"/>

@@ -1,4 +1,5 @@
-﻿using KinectV01.UserInfoControls;
+﻿using KinectV01.args;
+using KinectV01.UserInfoControls;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace KinectV01
@@ -35,7 +37,7 @@ namespace KinectV01
 
         public ICommand EnterCommand { get; private set; }
 
-
+        public event EventHandler<UpdateURLArgs> UpdateURLEvent; 
         private void EnterCompleteMethod()
         {
             string userName = UserName;
@@ -43,6 +45,10 @@ namespace KinectV01
 
             this.model.initCurrentUserAndIdol(idolName, userName);
             navigator.exitEnterWindow();
+
+            string url = $"https://www.youtube.com/results?search_query={idolName}";
+            UpdateURLEvent?.Invoke(this, new UpdateURLArgs(url));
+
         }
 
 
@@ -66,12 +72,9 @@ namespace KinectV01
         public void startPointCalcMethod(object parameter)
         {
             List<object> parameters = parameter as List<object>;
-            object canvas01 = parameters[0];
-            object image02 = parameters[1];
-            object image03 = parameters[2];
-            this.model.startPointCalc();
-            this.model.startDisplayColorStream(image02);
-            this.model.startSkeletonStream(canvas01, image03);
+            Canvas canvas01 = parameters[0] as Canvas;
+            Image image01 = parameters[1] as Image;
+            this.model.startPointCalc(canvas01, image01);
         }
 
 

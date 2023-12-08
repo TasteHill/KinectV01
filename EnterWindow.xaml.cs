@@ -23,5 +23,6 @@ namespace KinectV01
         {
             InitializeComponent();
         }
+
     }
 }

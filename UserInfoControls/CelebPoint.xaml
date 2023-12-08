@@ -19,7 +19,7 @@
                 </Button.Background>
             </Button>
             <Label x:Name="lblIdolName" FontFamily="NEXON Football Gothic B" Foreground="White" Content="연예인 이름" HorizontalAlignment="Left" Margin="100,10,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold" FontSize="13"/>
-            <Label x:Name="lblIdolPoint" FontFamily="NEXON Football Gothic B" Foreground="White"  Content="{Binding CurrentIdolScore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top" Width="120" Height="29" FontWeight="Bold" FontSize="13"/>
+            <Label x:Name="lblIdolPoint" FontFamily="NEXON Football Gothic B" Foreground="White"  Content="{Binding CurrentIdolScore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="100,41,0,0" VerticalAlignment="Top" Width="120" Height="29" FontSize="20"/>
             <Button x:Name="btnRandomizeScore" Content="Sort" Foreground="White" VerticalAlignment="Top" Click="btnRandomizeScore_Click" HorizontalAlignment="Right" Margin="0,10,10,0" Height="20" Width="40" FontSize="10" FontFamily="NEXON Football Gothic B">
                 <Button.Background>
                     <ImageBrush ImageSource="/btncolor.png"/>

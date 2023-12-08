@@ -91,6 +91,7 @@
     </Compile>
     <Compile Include="args\UpdateRankArgs.cs" />
     <Compile Include="args\UpdateUiScoreArgs.cs" />
+    <Compile Include="args\UpdateURLArgs.cs" />
     <Compile Include="CurrentInfo.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="idol.cs" />

@@ -137,7 +137,6 @@ namespace FirstPage
         {
             if (nui == null) return;
             if (nui.ColorStream == null) nui.ColorStream.Enable();
-            this.lastImage = image;
 
             EventHandler<Microsoft.Kinect.ColorImageFrameReadyEventArgs> handler = null;
 
@@ -156,12 +155,17 @@ namespace FirstPage
                 ImageBits,
                 ImageParam.Width * ImageParam.BytesPerPixel);
 
-                image.Source = src;
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    image.Source = src;
+
+                });
             };
 
             nui.ColorFrameReady += handler;
-            eventHandlers.Add(image, handler);
         }
+
 
         public void DisplayDepthStreamAt(Image image)
         {
@@ -501,6 +505,117 @@ namespace FirstPage
 
 
         ///////////////////////////////////////////////////////////////////////////////////////
+
+        public void DisplayHandAndCalcPoint(Action<double> callback, Canvas canvas,Image image, out CancellationTokenSource tSource)
+        {
+            tSource = new CancellationTokenSource();
+            CancellationToken cToken = tSource.Token;
+
+
+            Skeleton prevSkeleton = null;
+            Ellipse[] prevEllipse = new Ellipse[2];
+            bool isFirstFrame = true;
+
+            Task.Run(() =>
+            {
+                while (!cToken.IsCancellationRequested)
+                {
+                    using (SkeletonFrame sf = nui.SkeletonStream.OpenNextFrame(100))
+                    {
+                        if (sf != null)
+                        {
+                            Skeleton[] skeletons = new Skeleton[sf.SkeletonArrayLength];
+                            sf.CopySkeletonDataTo(skeletons);
+                            Skeleton skeleton = skeletons.FirstOrDefault(s => s.TrackingState == SkeletonTrackingState.Tracked);
+
+                            if (skeleton != null)
+                            {
+                                if (!isFirstFrame)
+                                {
+                                    Joint rightHand = skeleton.Joints[JointType.HandRight];
+                                    Joint leftHand = skeleton.Joints[JointType.HandLeft];
+                                    Joint prevRightHand = prevSkeleton.Joints[JointType.HandRight];
+                                    Joint prevLeftHand = prevSkeleton.Joints[JointType.HandLeft];
+
+                                    Joint head = skeleton.Joints[JointType.Head];
+                                    Joint hip = skeleton.Joints[JointType.HipCenter];
+
+                                    double deltaX = rightHand.Position.X - prevRightHand.Position.X;
+                                    double deltaY = rightHand.Position.Y - prevRightHand.Position.Y;
+                                    double deltaZ = rightHand.Position.Z - prevRightHand.Position.Z;
+
+
+                                    double score = Math.Sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ);
+                                    //score = ScaleScoreByDistance(humanScale, score);
+                                    if(score < 0)
+                                    {
+                                        continue;
+                                    }
+
+                                    callback(score);
+
+
+                                    Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        if (prevEllipse[0] != null)
+                                        {
+                                            canvas.Children.Remove(prevEllipse[0]);
+                                        }
+                                        if (prevEllipse[1] != null)
+                                        {
+                                            canvas.Children.Remove(prevEllipse[1]);
+                                        }
+                                        prevEllipse[0] = DrawHandCircle(rightHand.Position, canvas);
+                                        prevEllipse[1] = DrawHandCircle(leftHand.Position, canvas);
+                                    });
+                                    
+
+
+                                }
+                                else
+                                {
+                                    isFirstFrame = false;
+                                }
+                                prevSkeleton = skeleton;
+                            }
+                        }
+                    }
+                    Task.Delay(100);
+                }
+            }, cToken);
+        }
+
+        private Ellipse DrawHandCircle(SkeletonPoint handPoint, Canvas canvas)
+        {
+            CoordinateMapper mapper = nui.CoordinateMapper;
+            var mappedPoint = mapper.MapSkeletonPointToColorPoint(handPoint, ColorImageFormat.RgbResolution640x480Fps30);
+
+
+            var handCircle = new Ellipse
+            {
+                Width = 30,
+                Height = 30,
+                Fill = new SolidColorBrush(Colors.Red),
+                Stroke = new SolidColorBrush(Colors.Black),
+                StrokeThickness = 2
+            };
+
+            double xScale = canvas.ActualWidth / 640;
+            double yScale = canvas.ActualHeight / 480;
+
+            var canvasX = mappedPoint.X * xScale;
+            var canvasY = mappedPoint.Y * yScale;
+
+            canvasX = Math.Max(0, Math.Min(canvasX, canvas.ActualWidth - handCircle.Width));
+            canvasY = Math.Max(0, Math.Min(canvasY, canvas.ActualHeight - handCircle.Height));
+
+
+
+            Canvas.SetLeft(handCircle, canvasX - handCircle.Width / 2);
+            Canvas.SetTop(handCircle, canvasY - handCircle.Height / 2);
+            canvas.Children.Add(handCircle);
+            return handCircle;
+        }
 
 
     }

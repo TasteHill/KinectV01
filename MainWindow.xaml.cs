@@ -30,10 +30,14 @@ namespace KinectV01
             var viewModel = (MainViewModel)Application.Current.TryFindResource("mainViewModel");
             viewModel.UpdateRank += updateComponents;
             viewModel.UpdateUiScore += updateComponentsScore;
-
+            viewModel.UpdateURLEvent += updateURL;
         }
 
-        
+        private void updateURL(object sender, UpdateURLArgs e)
+        {
+            browser.Load(e.URL);
+        }
+
         private void updateComponents(object sender, args.UpdateRankArgs e)
         {
             rankWindow.reset();
@@ -43,9 +47,17 @@ namespace KinectV01
             }
         }
 
+        int scoreStack = 0;
         private void updateComponentsScore(object sender, args.UpdateUiScoreArgs e)
         {
-            rankWindow.updateScoreAt(e.Idol,e.User ,e.Idol.IScore);
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                rankWindow.updateScoreAt(e.Idol, e.User, e.Idol.IScore);
+                scoreProgressBar.UpdateProgressBar((++scoreStack)+3);
+            });
+
+            
         }
 
 

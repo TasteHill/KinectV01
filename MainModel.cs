@@ -61,10 +61,11 @@ namespace KinectV01
 
 
         KinectController kinectController = new KinectController();
-        public void startPointCalc()
+        public void startPointCalc(Canvas canvas, Image image)
         {
             MessageBox.Show("측정 시작");
-            kinectController.StartCapturingPlayerMovement((double score) =>
+            kinectController.DisplayColorStreamAt(image);
+            kinectController.DisplayHandAndCalcPoint((double score) =>
             {
                 currentIdol.IScore += (int)(score*100);
                 currentIdol.IdolUsers[currentUser.UName] += (int)(score * 100);
@@ -76,7 +77,8 @@ namespace KinectV01
 
                 UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(this.currentIdol, this.currentUser));
 
-            }, out CancellationTokenSource startPointCalcCanceltokensource);
+            }, canvas, image, out CancellationTokenSource startPointCalcCanceltokensource);
+
         }
 
         public event EventHandler<args.UpdateUiScoreArgs> UpdateUiScore;

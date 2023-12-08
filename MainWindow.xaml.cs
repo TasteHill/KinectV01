@@ -35,6 +35,7 @@ namespace KinectV01
 
         private void updateURL(object sender, UpdateURLArgs e)
         {
+            scoreProgressBar.UpdateProgressBar(0);
             browser.Load(e.URL);
         }
 

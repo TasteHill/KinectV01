@@ -54,7 +54,7 @@ namespace KinectV01.annime
             try
             {
                 progressBarValue = value;
-                if (progressBarValue <= 5000)
+                if (progressBarValue <= 1000)
                 {
                     ProgressBar1.Value = progressBarValue;
 
@@ -66,7 +66,7 @@ namespace KinectV01.annime
                 }
                 else
                 {
-                    ProgressBar1.Value = 5000;
+                    ProgressBar1.Value = 1000;
                 }
             }
             catch(Exception e)
@@ -116,7 +116,7 @@ namespace KinectV01.annime
             double progress = ProgressBar1.Value;
 
             // 만약 ProgressBar의 값이 20% 이상이면 crowd_image를 보이도록 설정
-            if (progress >= 1000 && progress<2500)
+            if (progress >= 200 && progress<500)
             {
                 crowd_image.Visibility = Visibility.Visible;
                 animation.To = 5; // TranslateTransform.Y
@@ -127,7 +127,7 @@ namespace KinectV01.annime
                 transform.BeginAnimation(TranslateTransform.YProperty, animation);
             }
 
-            else if (progress >= 2500 && progress <3500)
+            else if (progress >= 500 && progress <700)
             {
                 var countdownTimer1 = new DispatcherTimer();
                 countdownTimer1.Interval = TimeSpan.FromSeconds(0.2);
@@ -161,7 +161,7 @@ namespace KinectV01.annime
                 countdownTimer1.Start();
 
             }
-            if (progress >= 3500 && progress<=5000)
+            if (progress >= 700 && progress<=1000)
             {
                 light_left.Visibility = Visibility.Visible;
                 light_right.Visibility = Visibility.Visible;

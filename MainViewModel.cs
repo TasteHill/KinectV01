@@ -63,9 +63,15 @@ namespace KinectV01
         /// </summary>
 
         public ICommand startPointCalcCommand { get; private set; }
-        public void startPointCalcMethod()
+        public void startPointCalcMethod(object parameter)
         {
+            List<object> parameters = parameter as List<object>;
+            object canvas01 = parameters[0];
+            object image02 = parameters[1];
+            object image03 = parameters[2];
             this.model.startPointCalc();
+            this.model.startDisplayColorStream(image02);
+            this.model.startSkeletonStream(canvas01, image03);
         }
 
 

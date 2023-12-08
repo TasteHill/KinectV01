@@ -97,6 +97,7 @@
     <Compile Include="IdolTotal.cs" />
     <Compile Include="KinectController.cs" />
     <Compile Include="MainModel.cs" />
+    <Compile Include="MultiParameter.cs" />
     <Compile Include="Navigator.cs" />
     <Compile Include="RealayCommand.cs" />
     <Compile Include="User.cs" />

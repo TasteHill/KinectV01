@@ -91,6 +91,13 @@ namespace KinectV01
             kinectController.DisplayColorStreamAt(targetImage);
         }
 
+        public void startSkeletonStream(object canvasObj, object imageObj)
+        {
+            Canvas targetCanvas = canvasObj as Canvas;
+            Image targetImage = imageObj as Image;
+            kinectController.DisplaySkeletonAt(targetCanvas, targetImage);
+        }
+
 
 
 

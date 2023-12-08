@@ -195,8 +195,9 @@ namespace FirstPage
 
         public void DisplaySkeletonAt(Canvas canvas, Image image)
         {
-            if (nui == null) return;
-            if (nui.SkeletonStream == null) nui.SkeletonStream.Enable();
+            MessageBox.Show(nui.Status.ToString());
+            nui.SkeletonStream.Enable();
+            nui.DepthStream.Enable();
 
             Polyline[] m_poly = new Polyline[5];
 
@@ -215,85 +216,94 @@ namespace FirstPage
 
             handler = (sender, e) =>
             {
-                SkeletonFrame sf = e.OpenSkeletonFrame();
-                if (sf == null) return;
-                Skeleton[] skeletonData = new Skeleton[sf.SkeletonArrayLength];
-                sf.CopySkeletonDataTo(skeletonData);
-                using (DepthImageFrame depthImageFrame = e.OpenDepthImageFrame())
+                try
                 {
-                    if (depthImageFrame != null)
+                    SkeletonFrame sf = e.OpenSkeletonFrame();
+                    if (sf == null) return;
+                    Skeleton[] skeletonData = new Skeleton[sf.SkeletonArrayLength];
+                    sf.CopySkeletonDataTo(skeletonData);
+                    using (DepthImageFrame depthImageFrame = e.OpenDepthImageFrame())
                     {
-                        foreach (Skeleton sd in skeletonData)
+                        if (depthImageFrame != null)
                         {
-                            if (sd.TrackingState == SkeletonTrackingState.Tracked)
+                            foreach (Skeleton sd in skeletonData)
                             {
-                                int nMax = 20;
-                                Joint[] joints = new Joint[nMax];
-                                for (int j = 0; j < nMax; j++)
+                                if (sd.TrackingState == SkeletonTrackingState.Tracked)
                                 {
-                                    joints[j] = sd.Joints[(JointType)j];
+                                    MessageBox.Show("스켈레톤 인식됨");
+                                    Debug.WriteLine("스켈레톤 인식됨");
+                                    int nMax = 20;
+                                    Joint[] joints = new Joint[nMax];
+                                    for (int j = 0; j < nMax; j++)
+                                    {
+                                        joints[j] = sd.Joints[(JointType)j];
+                                    }
+                                    Point[] points = new Point[nMax];
+                                    for (int j = 0; j < nMax; j++)
+                                    {
+                                        DepthImagePoint depthPoint;
+                                        depthPoint = depthImageFrame.MapFromSkeletonPoint(joints[j].Position);
+                                        points[j] = new Point((int)(image.Width *
+                                        depthPoint.X / depthImageFrame.Width),
+                                        (int)(image.Height *
+                                        depthPoint.Y / depthImageFrame.Height));
+                                    }
+                                    PointCollection pc0 = new PointCollection(4);
+                                    pc0.Add(points[(int)JointType.HipCenter]);
+                                    pc0.Add(points[(int)JointType.Spine]);
+                                    pc0.Add(points[(int)JointType.ShoulderCenter]);
+                                    pc0.Add(points[(int)JointType.Head]);
+                                    m_poly[0].Points = pc0;
+                                    m_poly[0].Visibility = Visibility.Visible;
+
+                                    PointCollection pc1 = new PointCollection(5);
+                                    pc1.Add(points[(int)JointType.ShoulderCenter]);
+                                    pc1.Add(points[(int)JointType.ShoulderLeft]);
+                                    pc1.Add(points[(int)JointType.ElbowLeft]);
+                                    pc1.Add(points[(int)JointType.WristLeft]);
+                                    pc1.Add(points[(int)JointType.HandLeft]);
+                                    m_poly[1].Points = pc1;
+                                    m_poly[1].Visibility = Visibility.Visible;
+
+                                    PointCollection pc2 = new PointCollection(5);
+                                    pc2.Add(points[(int)JointType.ShoulderCenter]);
+                                    pc2.Add(points[(int)JointType.ShoulderRight]);
+                                    pc2.Add(points[(int)JointType.ElbowRight]);
+                                    pc2.Add(points[(int)JointType.WristRight]);
+                                    pc2.Add(points[(int)JointType.HandRight]);
+                                    m_poly[2].Points = pc2;
+                                    m_poly[2].Visibility = Visibility.Visible;
+
+                                    PointCollection pc3 = new PointCollection(5);
+                                    pc3.Add(points[(int)JointType.HipCenter]);
+                                    pc3.Add(points[(int)JointType.HipLeft]);
+                                    pc3.Add(points[(int)JointType.KneeLeft]);
+                                    pc3.Add(points[(int)JointType.AnkleLeft]);
+                                    pc3.Add(points[(int)JointType.FootLeft]);
+                                    m_poly[3].Points = pc3;
+                                    m_poly[3].Visibility = Visibility.Visible;
+
+                                    PointCollection pc4 = new PointCollection(5);
+                                    pc4.Add(points[(int)JointType.HipCenter]);
+                                    pc4.Add(points[(int)JointType.HipRight]);
+                                    pc4.Add(points[(int)JointType.KneeRight]);
+                                    pc4.Add(points[(int)JointType.AnkleRight]);
+                                    pc4.Add(points[(int)JointType.FootRight]);
+                                    m_poly[4].Points = pc4;
+                                    m_poly[4].Visibility = Visibility.Visible;
                                 }
-                                Point[] points = new Point[nMax];
-                                for (int j = 0; j < nMax; j++)
-                                {
-                                    DepthImagePoint depthPoint;
-                                    depthPoint = depthImageFrame.MapFromSkeletonPoint(joints[j].Position);
-                                    points[j] = new Point((int)(image.Width *
-                                    depthPoint.X / depthImageFrame.Width),
-                                    (int)(image.Height *
-                                    depthPoint.Y / depthImageFrame.Height));
-                                }
-                                PointCollection pc0 = new PointCollection(4);
-                                pc0.Add(points[(int)JointType.HipCenter]);
-                                pc0.Add(points[(int)JointType.Spine]);
-                                pc0.Add(points[(int)JointType.ShoulderCenter]);
-                                pc0.Add(points[(int)JointType.Head]);
-                                m_poly[0].Points = pc0;
-                                m_poly[0].Visibility = Visibility.Visible;
-
-                                PointCollection pc1 = new PointCollection(5);
-                                pc1.Add(points[(int)JointType.ShoulderCenter]);
-                                pc1.Add(points[(int)JointType.ShoulderLeft]);
-                                pc1.Add(points[(int)JointType.ElbowLeft]);
-                                pc1.Add(points[(int)JointType.WristLeft]);
-                                pc1.Add(points[(int)JointType.HandLeft]);
-                                m_poly[1].Points = pc1;
-                                m_poly[1].Visibility = Visibility.Visible;
-
-                                PointCollection pc2 = new PointCollection(5);
-                                pc2.Add(points[(int)JointType.ShoulderCenter]);
-                                pc2.Add(points[(int)JointType.ShoulderRight]);
-                                pc2.Add(points[(int)JointType.ElbowRight]);
-                                pc2.Add(points[(int)JointType.WristRight]);
-                                pc2.Add(points[(int)JointType.HandRight]);
-                                m_poly[2].Points = pc2;
-                                m_poly[2].Visibility = Visibility.Visible;
-
-                                PointCollection pc3 = new PointCollection(5);
-                                pc3.Add(points[(int)JointType.HipCenter]);
-                                pc3.Add(points[(int)JointType.HipLeft]);
-                                pc3.Add(points[(int)JointType.KneeLeft]);
-                                pc3.Add(points[(int)JointType.AnkleLeft]);
-                                pc3.Add(points[(int)JointType.FootLeft]);
-                                m_poly[3].Points = pc3;
-                                m_poly[3].Visibility = Visibility.Visible;
-
-                                PointCollection pc4 = new PointCollection(5);
-                                pc4.Add(points[(int)JointType.HipCenter]);
-                                pc4.Add(points[(int)JointType.HipRight]);
-                                pc4.Add(points[(int)JointType.KneeRight]);
-                                pc4.Add(points[(int)JointType.AnkleRight]);
-                                pc4.Add(points[(int)JointType.FootRight]);
-                                m_poly[4].Points = pc4;
-                                m_poly[4].Visibility = Visibility.Visible;
                             }
                         }
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
             };
 
             nui.AllFramesReady += handler;
-            eventHandlers.Add(canvas, handler);
         }
 
         /// <summary>

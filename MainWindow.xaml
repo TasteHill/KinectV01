@@ -13,6 +13,10 @@
     <Window.DataContext>
         <StaticResource ResourceKey="mainViewModel"/>
     </Window.DataContext>
+    <Window.Resources>
+        <local:MultiParameter x:Key="MultiParameter"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/background_frame.png"/>
@@ -41,7 +45,15 @@
             </Button.Background>
             <behaviors:Interaction.Triggers>
                 <behaviors:EventTrigger EventName="Click">
-                    <behaviors:InvokeCommandAction Command="{Binding startPointCalcCommand}" />
+                    <behaviors:InvokeCommandAction Command="{Binding startPointCalcCommand}">
+                        <behaviors:InvokeCommandAction.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MultiParameter}">
+                                <Binding ElementName="canvas01"/>
+                                <Binding ElementName="image01"/>
+                                <!-- 추가 바인딩 필요 시 여기에 추가 -->
+                            </MultiBinding>
+                        </behaviors:InvokeCommandAction.CommandParameter>
+                    </behaviors:InvokeCommandAction>
                 </behaviors:EventTrigger>
             </behaviors:Interaction.Triggers>
 
@@ -50,7 +62,6 @@
 
 
         <Button x:Name="btndebug" Command="{Binding startDisplayColorStreamCommand}" CommandParameter="{Binding ElementName=image01}" Content="Button" HorizontalAlignment="Left" Margin="1260,829,0,0" VerticalAlignment="Top" Height="45" Width="85"/>
-        <Image x:Name="image01" HorizontalAlignment="Left" Height="377" Margin="1260,442,0,0" VerticalAlignment="Top" Width="277"/>
         <Button x:Name="UserInfoBtn" Content="UserInfo"  Foreground="White" Command="{Binding CreateEnterWindowCommand}" HorizontalAlignment="Right" Margin="0,15,50,0" VerticalAlignment="Top" Height="30" Width="80" FontFamily="NEXON Football Gothic B" FontSize="13" Click="UserInfoBtn_Click">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
@@ -61,5 +72,8 @@
                 <ImageBrush ImageSource="/btncolor.png"/>
             </Button.Background>
         </Button>
+        <Canvas x:Name="canvas01" Margin="1245,480,60,130">
+            <Image x:Name="image01" Height="269" Canvas.Left="0" Canvas.Top="0" Width="295"/>
+        </Canvas>
     </Grid>
 </Window>

@@ -75,13 +75,14 @@ namespace KinectV01
 
                 currentScore += (int)(score * 100);
 
-                UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(this.currentIdol, this.currentUser));
+                UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(this.currentIdol, this.currentUser, (int)(score*20)));
 
-            }, canvas, image, out CancellationTokenSource startPointCalcCanceltokensource);
+            }, canvas, image, out StopCalcTokenSource);
 
         }
 
         public event EventHandler<args.UpdateUiScoreArgs> UpdateUiScore;
+        CancellationTokenSource StopCalcTokenSource = null;
 
         ///<summary>
         ///DB 관련
@@ -124,7 +125,6 @@ namespace KinectV01
             return idols;
         }
 
-
         public void initCurrentUserAndIdol(string idolName, string userName)
         {
             var currentInfo = DB.SetUserAndIdol(userName, idolName, this.Idols, this.users);
@@ -140,6 +140,18 @@ namespace KinectV01
             DB.updateScoreTable(currentIdol.Inumber, currentUser.Unumber, currentScore);
             currentScore = 0;
             UpdateRank?.Invoke(this, new args.UpdateRankArgs(this.Idols, this.users));
+        }
+
+        public void ResetProgressBar()
+        {
+            
+        }
+
+        internal void StopCalcScore()
+        {
+            if(StopCalcTokenSource == null) return;
+            StopCalcTokenSource.Cancel();
+            this.kinectController.StopDisplayColorFrame();
         }
 
         ///위 메소드가 실행되면 발동

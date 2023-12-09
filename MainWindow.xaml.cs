@@ -31,11 +31,37 @@ namespace KinectV01
             viewModel.UpdateRank += updateComponents;
             viewModel.UpdateUiScore += updateComponentsScore;
             viewModel.UpdateURLEvent += updateURL;
+            viewModel.ResetProgressBarEvent += ResetProgressBar;
+        }
+
+        private void ResetProgressBar(object sender, EventArgs e)
+        {
+            scoreProgressBar.UpdateProgressBar(0);
+            
+            scoreStack = 0;
+
+        
+                for (int i = canvas01.Children.Count - 1; i >= 0; i--)
+                {
+                    var child = canvas01.Children[i];
+                    if (child is Ellipse)
+                    {
+                        canvas01.Children.RemoveAt(i);
+                    }
+                }
+            
+            Task.Delay(500);
+            image01.Source = null;
+            canvas01.InvalidateVisual();
+            
+
+         
+
         }
 
         private void updateURL(object sender, UpdateURLArgs e)
         {
-            scoreProgressBar.UpdateProgressBar(0);
+            //scoreProgressBar.UpdateProgressBar(0);
             browser.Load(e.URL);
         }
 
@@ -55,22 +81,15 @@ namespace KinectV01
             Application.Current.Dispatcher.Invoke(() =>
             {
                 rankWindow.updateScoreAt(e.Idol, e.User, e.Idol.IScore);
-                scoreProgressBar.UpdateProgressBar((++scoreStack)+3);
+                if (e.Score>0.01)//여기에 원하는 조건식 추가
+                {
+                    scoreStack += e.Score;
+                    scoreProgressBar.UpdateProgressBar(scoreStack);
+                }
             });
 
             
         }
-
-
-
-
-
-
-
-
-
-
-
 
 
         private void UserInfoBtn_Click(object sender, RoutedEventArgs e)
@@ -79,5 +98,9 @@ namespace KinectV01
             abc.Show();
         }
 
+        private void rankWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

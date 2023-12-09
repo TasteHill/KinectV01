@@ -133,6 +133,7 @@ namespace FirstPage
         /// <param name="image"></param>
         /// 
         public Image lastImage = null;
+        public EventHandler<Microsoft.Kinect.ColorImageFrameReadyEventArgs> ColorEventHandler = null;
         public void DisplayColorStreamAt(Image image)
         {
             if (nui == null) return;
@@ -164,6 +165,7 @@ namespace FirstPage
             };
 
             nui.ColorFrameReady += handler;
+            ColorEventHandler = handler;
         }
 
 
@@ -333,6 +335,19 @@ namespace FirstPage
                     nui.AllFramesReady -= allFramesHandler;
                     eventHandlers.Remove(element); // 딕셔너리에서 항목 제거
                 }
+            }
+        }
+
+        public void StopDisplayColorFrame()
+        {
+            try
+            {
+                nui.ColorFrameReady -= ColorEventHandler;
+
+            }
+            catch
+            {
+
             }
         }
 
@@ -565,8 +580,12 @@ namespace FirstPage
                                         {
                                             canvas.Children.Remove(prevEllipse[1]);
                                         }
-                                        prevEllipse[0] = DrawHandCircle(rightHand.Position, canvas);
-                                        prevEllipse[1] = DrawHandCircle(leftHand.Position, canvas);
+                                        if (!cToken.IsCancellationRequested)
+                                        {
+                                            prevEllipse[0] = DrawHandCircle(rightHand.Position, canvas);
+                                            prevEllipse[1] = DrawHandCircle(leftHand.Position, canvas);
+                                        }
+
                                     });
                                     
 

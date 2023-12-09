@@ -21,9 +21,13 @@ namespace KinectV01
 
 
         public ICommand CreateEnterWindowCommand { get; private set; }
-        
+        public event EventHandler ResetProgressBarEvent;
         private void CreateEnterWindowMethod()
         {
+            
+            
+            this.model.StopCalcScore();
+            ResetProgressBarEvent?.Invoke(this, EventArgs.Empty);
             this.navigator.showEnterWindow();
         }
 
@@ -129,7 +133,7 @@ namespace KinectV01
 
         public void sendCurrentIdolScoreToView(object sender, args.UpdateUiScoreArgs e)
         {
-            UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(e.Idol, e.User));
+            UpdateUiScore?.Invoke(this, new args.UpdateUiScoreArgs(e.Idol, e.User, e.Score));
         }
 
         public event EventHandler<args.UpdateUiScoreArgs> UpdateUiScore;
